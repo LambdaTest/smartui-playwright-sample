@@ -2,6 +2,12 @@ const { chromium } = require("playwright");
 const { expect } = require("@playwright/test");
 const smartuiSnapshot = require("@lambdatest/playwright-driver");
 
+
+// username: Username can be found at automation dashboard
+const USERNAME = process.env.LT_USERNAME || "<USERNAME>";
+
+// AccessKey:  AccessKey can be generated from automation dashboard or profile section
+const KEY = process.env.LT_ACCESS_KEY || "<ACCESS_KEY>";
 (async () => {
   const capabilities = {
     browserName: "Chrome",
@@ -10,8 +16,8 @@ const smartuiSnapshot = require("@lambdatest/playwright-driver");
       platform: "Windows 10",
       build: "Playwright SmartUI Build",
       name: "Playwright SmartUI Test",
-      user: "jeeveshiitj",
-      accessKey: "mtPSfImA94UZNUj92fOctXE1VrKR4uDAoYrVU1kKJlqzclR6xU",
+      user: USERNAME,
+      accessKey: KEY,
       network: true,
       video: true,
       console: true,
@@ -33,9 +39,13 @@ const smartuiSnapshot = require("@lambdatest/playwright-driver");
 
   const page = await browser.newPage();
 
-  await page.goto("https://www.lambdatest.com");
-
+  await page.goto("https://ipinfo.io/");
+  options = {
+    ignoreDOM: {
+        xpath: ['//*[@id="__next"]/div/div/main/section[4]'],
+    }
+}
   // Add the following command in order to take screenshot in SmartUI
-  await smartuiSnapshot.smartuiSnapshot(page, "LT-Home");
+  await smartuiSnapshot.smartuiSnapshot(page, "Ignore-ticker", options);
   await browser.close();
 })();
