@@ -1,8 +1,9 @@
 {
   "name": "lambdatest-playwright-sample",
   "scripts": {
-    "test": "node playwright-single.js",
-    "test-smartui": "node playwright-smartui.js"
+    "smartui-cloud": "npx smartui exec  node playwrightCloud.js",
+    "smartui-local": "npx smartui exec  node playwrightLocal.js",
+    "smartui-ignoreDOM": "npx smartui exec  node ignorePlaywright.js"
   },
   "engines": {
     "node": ">=12.7.0"
