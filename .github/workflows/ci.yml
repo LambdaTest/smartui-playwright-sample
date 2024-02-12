@@ -1,0 +1,32 @@
+name: Playwright SDK Wrapper
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  LT_USERNAME: ${{ secrets.LT_USERNAME }}
+  LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
+  PROJECT_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+  LT_SDK_DEBUG: true
+  SMARTUI_DEBUG: true
+
+jobs:
+  smartui-playwright-sdk:
+    name: Execute playwright sdk build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies and clean directory
+        run: |
+          npm i @lambdatest/smartui-cli @lambdatest/playwright-driver playwright
+
+
+      - name: Execute playwright wrapper
+        run: |
+          npx smartui --version
+          npx smartui config:create smartui-web.json
+          npx smartui exec node sdk/playwrightCloud.js --config smartui-web.json
